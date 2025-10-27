@@ -1,0 +1,10 @@
+Hallo!
+
+Hier zijn de nieuwe recepten van de maand {{ month }}:
+
+{% for recipe in recipes %}
+- {{ recipe.titel }} ({{ recipe.auteur }})
+{% endfor %}
+
+Bekijk ze allemaal op de website!
+
