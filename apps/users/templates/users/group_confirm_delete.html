@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Groep verwijderen</h2>
+  <p>Weet je zeker dat je de groep <strong>{{ object.name }}</strong> wilt verwijderen?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Ja, verwijderen</button>
+    <a href="{% url 'users:group-list' %}">Annuleren</a>
+  </form>
+{% endblock %}
+

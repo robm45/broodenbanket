@@ -1,0 +1,52 @@
+{% extends "base.html" %}                                                                                                                                                           
+ 
+{% block  content %}
+  {% load static %}
+  <div class="card">
+       <div class="card-body text-center">
+            <h1>Welkom bij de brood en banket bibliotheek</h1>
+       <div>
+       <div class="card-body">
+          <img class="card-img-top" src="{% static 'images/main.jpeg' %}"
+            alt="Main image" width="1150" height="600" class="d-inline-block align-text-top" class="img-fluid" />
+       </div>
+  <div>
+  {% load static %}
+ 
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <!-- Kolom 1 -->
+      <div class="col-auto">
+        <div class="card-small">
+          <a href="{% url 'recepten:recept-categorie-lijst' 'brood' %}">
+          <img src="{% static 'images/brood.jpg' %}" class="square-thumb" alt="Brood">
+         </a>
+          <div class="card-body text-center">
+            <h5 class="card-title">Brood</h5>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Kolom 2 -->
+      <div class="col-auto">
+        <div class="card-small">
+          <a href="{% url 'recepten:recept-categorie-lijst' 'banket' %}">
+          <img src="{% static 'images/banket.jpg' %}" class="square-thumb" alt="Banket">
+         </a>
+          <div class="card-body text-center">
+            <h5 class="card-title">Banket</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+ 
+     <footer class="text-center text-lg-start bg-light textmuted mt-auto">
+          <div class="text-center p-4">
+                <small>Versie: {{ APP_VERSION }}</small>
+                <br>© Copyright - Casakok 2025
+           </div>
+      </footer>
+ 
+{% endblock %}

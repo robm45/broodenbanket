@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Weet je zeker dat je het recept "{{ object.naam }}" wilt verwijderen?</h1>
+  <p>Dit verwijdert ook alle gekoppelde ingrediëntenregels.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Ja, verwijderen</button>
+    <a href="{% url 'recepten:recept-detail' object.pk %}" class="btn btn-secondary">Annuleren</a>
+  </form>
+{% endblock %}
+

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Recepten titel -->
+<div class="card mb-4 shadow-sm">
+  <div class="card-header bg-info text-white">
+    <h1 class="mb-0">{{ recept.naam }}</h1>
+  </div>
+  <div class="card-body">
+
+    <div class="d-flex justify-content-center align-items-center" >
+      {% if recept.foto %}
+         <img src="{{ recept.foto.url }}" alt="Foto van {{ recept.naam }}" class="img-fluid" style="max-width:300px;">
+      {% else %}
+         <p class="text-center">Geen foto beschikbaar.</p>
+      {% endif %}
+    </div>
+
+
+    <!-- Recept details -->
+    <div class="bg-primary-subtle p-3 rounded mb-4">
+      <div class="row g-2">
+        <div class="col-12 col-md-auto">
+          <p class="mb-0"><strong>Categorie:</strong> {{ recept.get_categorie_display }}</p>
+        </div>
+        <div class="col-12 col-md-auto">
+          <p class="mb-0"><strong>Moeilijkheid:</strong> {{ recept.get_moeilijkheidsgraad_display }}</p>
+        </div>
+        <div class="col-12 col-md-auto">
+          <p class="mb-0"><strong>Baktijd:</strong> {{ recept.baktijd }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ingrediënten -->
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-info text-white">
+        <h4 class="mb-0">Ingrediënten</h4>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          {% for ri in recept.receptingredient_set.all %}
+            <li class="list-group-item">{{ ri.hoeveelheid }} {{ ri.ingredient.naam }}</li>
+          {% empty %}
+            <li class="list-group-item text-muted">Geen ingrediënten toegevoegd.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bereidingswijze -->
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-info text-white">
+        <h4 class="mb-0">Bereidingswijze</h4>
+      </div>
+      <div class="card-body">
+        <p>{{ recept.bereidingswijze|linebreaks }}</p>
+      </div>
+    </div>
+
+    <!-- Actieknoppen met iconen -->
+    <div class="d-flex gap-2 mb-4">
+    {% if user.is_authenticated %}
+      <a href="{% url 'recepten:recept-update' pk=recept.pk %}" class="btn btn-warning">
+        <i class="bi bi-pencil"></i> Recept bewerken
+      </a>
+      <a href="{% url 'recepten:recept-delete' object.pk %}" class="btn btn-danger">
+        <i class="bi bi-trash"></i> Recept verwijderen
+      </a>
+    {% endif %}
+      <a href="{% url 'recepten:recept-export-pdf' pk=recept.pk %}" class="btn btn-success">
+        <i class="bi bi-file-earmark-pdf"></i> Download als PDF
+      </a> 
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+

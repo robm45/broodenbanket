@@ -1,0 +1,65 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/pdf.css' %}" media="print">
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ recept.naam }}</title>
+</head>
+<body>
+
+  <!-- Recept titel -->
+  <div class="card">
+    <div class="card-header">
+      <h1>{{ recept.naam }}</h1>
+    </div>
+    <div class="card-body">
+      
+     <div style="text-center; center" >
+      {% if recept.foto %}
+         <img src="file://{{ recept.foto.path }}" alt="Foto van {{ recept.naam }}" class="recept-foto">
+      {% else %}
+         <p class="no-foto">Geen foto beschikbaar.</p>
+      {% endif %}
+    </div>
+
+     <!-- Recept details -->
+      <div class="details">
+        <p><strong>Categorie:</strong> {{ recept.get_categorie_display }}</p>
+        <p><strong>Moeilijkheid:</strong> {{ recept.get_moeilijkheidsgraad_display }}</p>
+        <p><strong>Baktijd:</strong> {{ recept.baktijd }}</p>
+      </div>
+
+      <!-- Ingrediënten -->
+      <div class="card">
+        <div class="card-header">
+          <h4>Ingrediënten</h4>
+        </div>
+        <div class="card-body">
+          <ul>
+            {% for ri in recept.receptingredient_set.all %}
+              <li>{{ ri.hoeveelheid }} {{ ri.ingredient.naam }}</li>
+            {% empty %}
+              <li><em>Geen ingrediënten toegevoegd.</em></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bereidingswijze -->
+      <div class="card">
+        <div class="card-header">
+          <h4>Bereidingswijze</h4>
+        </div>
+        <div class="card-body">
+          <p>{{ recept.bereidingswijze|linebreaks }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
+

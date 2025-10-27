@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="card mb-4 shadow-sm">
+  <div class="card-header bg-info text-white">
+    <h3 class="mb-0">
+      {% if form.instance.pk %}Recept bewerken{% else %}Nieuw recept{% endif %}
+    </h3>
+  </div>
+
+  <div class="card-body">
+    <form method="post" enctype="multipart/form-data" class="container my-4">
+      {% csrf_token %}
+
+      <div class="mb-4">
+        {{ form.as_p }}
+      </div>
+
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Ingrediënten</h5>
+          <button type="button" id="add-ingredient" class="btn btn-success btn-sm">
+            <i class="bi bi-plus-lg"></i> Ingrediënt toevoegen
+          </button>
+        </div>
+
+        <div class="card-body p-0">
+          <table class="table table-bordered mb-0 align-middle" id="ingredienten-table">
+            <thead class="table-light">
+              <tr>
+                <th style="width:40%">Ingrediënt</th>
+                <th style="width:40%">Hoeveelheid</th>
+                <th style="width:20%">Actie</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{ ingredienten_formset.management_form }}
+              {% for form in ingredienten_formset %}
+              <tr class="ingredient-row">
+                {# 🔑 VERPLICHT: render alle hidden velden zoals form.id etc. #}
+                {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+
+                <td>
+                  {% render_field form.ingredient class="form-control" %}
+                  {% for error in form.ingredient.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                  {% endfor %}
+                </td>
+
+                <td>
+                  {% render_field form.hoeveelheid class="form-control" %}
+                  {% for error in form.hoeveelheid.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                  {% endfor %}
+                </td>
+
+                <td class="text-center">
+                  {{ form.DELETE }}
+                  <button type="button" class="btn btn-sm btn-danger remove-row">
+                    <i class="bi bi-trash"></i> Verwijder
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {# 🔒 Verborgen template voor nieuwe rijen: óók hidden_fields + DELETE #}
+      <table style="display:none;">
+        <tbody>
+          <tr id="empty-form-row">
+            {% for hidden in ingredienten_formset.empty_form.hidden_fields %}{{ hidden }}{% endfor %}
+            <td>{% render_field ingredienten_formset.empty_form.ingredient class="form-control" %}</td>
+            <td>{% render_field ingredienten_formset.empty_form.hoeveelheid class="form-control" %}</td>
+            <td class="text-center">
+              {{ ingredienten_formset.empty_form.DELETE }}
+              <button type="button" class="btn btn-sm btn-danger remove-row">
+                <i class="bi bi-trash"></i> Verwijder
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="text-end mt-3">
+        <button type="submit" class="btn btn-success">
+          <i class="bi bi-save"></i> Opslaan
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const addButton = document.getElementById("add-ingredient");
+  const tableBody = document.querySelector("#ingredienten-table tbody");
+  const emptyRow = document.getElementById("empty-form-row");
+  const totalForms = document.querySelector("[name$='-TOTAL_FORMS']");
+
+  // Nieuwe rij
+  addButton.addEventListener("click", function() {
+    const idx = parseInt(totalForms.value, 10);
+    const newRow = emptyRow.cloneNode(true);
+    newRow.style.display = "";
+    newRow.removeAttribute("id");
+
+    // vervang __prefix__ overal (ook in hidden input names/ids!)
+    newRow.innerHTML = newRow.innerHTML.replace(/__prefix__/g, idx);
+    totalForms.value = idx + 1;
+
+    tableBody.appendChild(newRow);
+  });
+
+  // Verwijderen (DELETE aanvinken + verbergen)
+  tableBody.addEventListener("click", function(e) {
+    const btn = e.target.closest(".remove-row");
+    if (!btn) return;
+    const row = btn.closest("tr");
+    const deleteInput = row.querySelector("input[type=checkbox][name$='-DELETE']");
+    if (deleteInput) {
+      deleteInput.checked = true;          // markeer voor delete
+      row.style.display = "none";          // visueel verbergen
+    } else {
+      // fallback voor rijen die niet correct gevuld zijn
+      row.remove();
+    }
+  });
+});
+</script>
+
+{% endblock %}
+
