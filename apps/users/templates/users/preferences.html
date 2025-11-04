@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-6 offset-md-3 mt-5">
+  <h2 class="mb-4 text-center">Voorkeuren</h2>
+
+  <form method="post" class="needs-validation">
+    {% csrf_token %}
+
+    <div class="form-check mb-3">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="receive_monthly_mail"
+        name="receive_monthly_mail"
+        {% if profile.receive_monthly_mail %}checked{% endif %}
+      >
+      <label class="form-check-label" for="receive_monthly_mail">
+        Ontvang maandelijks overzicht van nieuwe recepten
+      </label>
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">Opslaan</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+

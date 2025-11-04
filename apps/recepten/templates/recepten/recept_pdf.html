@@ -1,65 +1,74 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/pdf.css' %}" media="print">
 
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <title>{{ recept.naam }}</title>
+    <link rel="stylesheet" href="{% static 'css/pdf.css' %}" media="all">
 </head>
-<body>
+<body class="pdf-versie">
 
   <!-- Recept titel -->
-  <div class="card">
-    <div class="card-header">
-      <h1>{{ recept.naam }}</h1>
+    <div class="titel-card">
+        <div class="card-header">{{ recept.naam }}</div>
     </div>
-    <div class="card-body">
+
       
-     <div style="text-center; center" >
-      {% if recept.foto %}
-         <img src="file://{{ recept.foto.path }}" alt="Foto van {{ recept.naam }}" class="recept-foto">
+     <div class="foto" >
+      {% if foto_pad %}
+      <img src="{{ foto_pad }}" alt="Foto van {{ recept.naam }}" >
       {% else %}
          <p class="no-foto">Geen foto beschikbaar.</p>
       {% endif %}
-    </div>
+     </div>
 
      <!-- Recept details -->
-      <div class="details">
-        <p><strong>Categorie:</strong> {{ recept.get_categorie_display }}</p>
-        <p><strong>Moeilijkheid:</strong> {{ recept.get_moeilijkheidsgraad_display }}</p>
-        <p><strong>Baktijd:</strong> {{ recept.baktijd }}</p>
-      </div>
+     <div class="recept-meta">
+          <div class="meta-item">
+            <strong>Categorie:</strong> {{ recept.get_categorie_display }}
+          </div>
+          <div class="meta-item">
+            <strong>Moeilijkheid:</strong> {{ recept.get_moeilijkheidsgraad_display }}
+          </div>
+          <div class="meta-item">
+            <strong>Baktijd:</strong> {{ recept.baktijd }}
+          </div>
+     </div>
 
+
+    <!-- Body -->
+    <div class="recept-body">
+     <div class="recept-row">
       <!-- Ingrediënten -->
-      <div class="card">
-        <div class="card-header">
-          <h4>Ingrediënten</h4>
-        </div>
-        <div class="card-body">
-          <ul>
-            {% for ri in recept.receptingredient_set.all %}
-              <li>{{ ri.hoeveelheid }} {{ ri.ingredient.naam }}</li>
-            {% empty %}
-              <li><em>Geen ingrediënten toegevoegd.</em></li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-
+       <div class="recept-card ingredienten-card">
+               <div class="card-header"> Ingrediënten </div>
+          <div class="card-body">
+            <ul class="card-body">
+              {% for ri in recept.receptingredient_set.all %}
+                <li>{{ ri.hoeveelheid }} {{ ri.ingredient.naam }}</li>
+              {% empty %}
+                <li><em>Geen ingrediënten toegevoegd.</em></li>
+              {% endfor %}
+            </ul>
+          </div>
+       </div>
       <!-- Bereidingswijze -->
-      <div class="card">
-        <div class="card-header">
-          <h4>Bereidingswijze</h4>
+       <div class="recept-card bereiding-card">
+          <div class="card-header">
+            Bereidingswijze
+          </div>
+          <div class="card-body">
+            <p>{{ recept.bereidingswijze|linebreaks }}</p>
+          </div>
         </div>
-        <div class="card-body">
-          <p>{{ recept.bereidingswijze|linebreaks }}</p>
-        </div>
-      </div>
-
+     </div>
     </div>
-  </div>
 
 </body>
 </html>
+
+<script>
+  console.log("Foto pad:", "{{ foto_pad|escapejs }}");
+</script>
 

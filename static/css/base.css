@@ -1,0 +1,176 @@
+/* ============================
+   Basis stijlen en kleuren
+   ============================ */
+:root {
+  --primary:   #007bff;
+  --primary-light: #66b2ff; /* lichtere variant */
+  --secondary: #6c757d;
+  --success:   #28a745;
+  --danger:    #dc3545;
+  --warning:   #ffc107;
+  --info:      #17a2b8;
+  --light:     #f8f9fa;
+  --dark:      #343a40;
+}
+
+/* Zorgt voor nette uitlijning van logo en titel */
+.navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .navbar-brand img {
+    height: 40px;
+    width: 40px;
+}
+
+.navbar .navbar-brand span {
+    font-size: 1.25rem;
+    color: white;
+}
+
+/* Ruimte tussen titel en menu */
+@media (min-width: 992px) {
+    .navbar .navbar-brand {
+        margin-right: 2rem;
+    }
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #fafafa;
+}
+
+h1, h2, h3 {
+  color: #222;
+}
+
+/* Navigatie algemeen */
+nav {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+nav a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+nav a:hover {
+  color: var(--primary);
+}
+
+/* Tabellen */
+#nummers-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+#nummers-table th,
+#nummers-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+#nummers-table th {
+  background-color: #f5f5f5;
+}
+#nummers-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Formulieren */
+.form-errors {
+  background-color: #ffe6e6;
+  border: 1px solid #ff4d4d;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  color: #cc0000;
+}
+.form-errors ul {
+  margin: 0;
+  padding-left: 20px;
+}
+.form-label { font-weight: bold; }
+
+/* ====================================
+   Consistente knoppen (buttons + links)
+   ==================================== */
+
+button,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 38px;              /* vaste hoogte */
+  line-height: 1.2;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+
+  border: none;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  text-decoration: none;         /* <a> zonder underline */
+  color: #fff;                   /* standaard wit */
+}
+
+/* --- Kleurenvarianten --- */
+.btn-secondary {
+  background-color: var(--info);         /* lichtblauw */
+}
+.btn-secondary:hover {
+  background-color: #138496;
+}
+
+.btn-warning {
+  background-color: var(--success);      /* groen */
+}
+.btn-warning:hover {
+  background-color: #218838;
+}
+
+.btn-danger {
+  background-color: var(--danger);       /* rood */
+}
+.btn-danger:hover {
+  background-color: #b02a37;
+}
+
+/* Optioneel: als je de "nummer toevoegen" knop wilt houden */
+#add-nummer,
+#add-nummer.btn {
+  background-color: var(--primary);
+}
+#add-nummer:hover,
+#add-nummer.btn:hover {
+  background-color: #0b7dda;
+}
+
+/* --- Actieknoppen-groep --- */
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.action-buttons form {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
+.action-buttons form button {
+  width: auto; /* geen full-width knoppen in formulieren */
+
+body {
+        background-color: yellow !important;
+}

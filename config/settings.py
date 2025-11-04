@@ -27,7 +27,8 @@ if os.environ.get('MOD_WSGI') != 'true':
 #---------------------
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
  
-DEBUG = os.getenv('DEBUG', 'FALSE') == 'True'
+#DEBUG = os.getenv('DEBUG', 'FALSE') == 'True'
+DEBUG = True
 DJANGO_ENV = os.getenv('DJANGO_ENV','dev')
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 LOGGING_MODULE = os.getenv('LOGGING_MODULE', 'config.logging_dev')
@@ -71,14 +72,6 @@ if DJANGO_ENV == "prod":
     MANAGERS = ADMINS
  
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://odroid:8000",
-    "http://192.168.178.116", 
-]
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -119,6 +112,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'config.context_processors.version',
             ],
         },
     },
@@ -170,7 +164,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Amsterdam'
 
 USE_I18N = True
 

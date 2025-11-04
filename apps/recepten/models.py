@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 from django.core.exceptions import ValidationError
+from apps.recepten.utils import recept_image_path
  
 class Ingredient(models.Model):
     naam = models.CharField(
@@ -44,7 +45,7 @@ class Recept(models.Model):
     baktijd = models.DurationField(help_text="Bijv. 00:30:00 voor 30 minuten")
     moeilijkheidsgraad = models.PositiveSmallIntegerField(choices=MOEILIJKHEID_CHOICES, default=1)
     datum_toegevoegd = models.DateTimeField(auto_now_add=True)
-    foto = models.ImageField(upload_to='recepten_fotos/', blank=True, null=True)
+    foto = models.ImageField(upload_to=recept_image_path, blank=True, null=True)
  
     ingredienten = models.ManyToManyField(
         Ingredient,

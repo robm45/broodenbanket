@@ -1,10 +1,39 @@
 {% extends "base.html" %}
+{% load form_tags %}
+
 {% block content %}
-<h2>Inloggen</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Inloggen</button>
-</form>
+<div class="col-md-6 offset-md-3 mt-5">
+  <h2 class="mb-4 text-center">Inloggen</h2>
+
+  {% if form.errors %}
+    <div class="alert alert-danger">
+      Ongeldige gebruikersnaam of wachtwoord. Probeer het opnieuw.
+    </div>
+  {% endif %}
+
+  <form method="post" class="needs-validation">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="{{ form.username.id_for_label }}" class="form-label">Gebruikersnaam</label>
+      {{ form.username|add_class:"form-control" }}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.password.id_for_label }}" class="form-label">Wachtwoord</label>
+      {{ form.password|add_class:"form-control" }}
+    </div>
+
+    <div class="d-grid mb-3">
+      <button type="submit" class="btn btn-primary">Inloggen</button>
+    </div>
+
+    <div class="text-center">
+      <a href="{% url 'users:password_reset' %}" class="text-decoration-none">
+        Wachtwoord vergeten?
+      </a>
+    </div>
+  </form>
+</div>
 {% endblock %}
 

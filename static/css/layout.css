@@ -1,0 +1,34 @@
+/* ============================
+   Layout met 2 kolommen
+   ============================ */
+.layout-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  min-height: calc(100vh - 80px); /* header/footer ruimte */
+}
+
+/* Linkerkolom */
+.left-col {
+  flex: 0 0 30%;
+  max-width: 30%;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Rechterkolom */
+.right-col {
+  flex: 1 1 70%;
+  max-width: 100%;
+  padding: 1rem;
+  border: 2px solid #90ee90;
+  border-radius: 8px;
+  background-color: #d0ecd7;
+  min-height: calc(100vh - 80px);
+  overflow-y: auto;
+  box-shadow: 4px 4px 6px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}

@@ -1,0 +1,22 @@
+/* Dropdown menu's */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -0.5rem;
+  display: none;
+  position: absolute;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  font-weight: bold;
+}
+
+

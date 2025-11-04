@@ -1,0 +1,162 @@
+/* ============================
+   Recept detail en lijsten
+   ============================ */
+
+/* Recept titel */
+   .recept-titel {
+  border-radius: 0.5rem;              /* afgeronde hoeken */
+  padding: 0.5rem 1rem;               /* ruimte binnen de omlijsting */
+  display: block;              /* zodat de box strak om de tekst valt */
+  background-color: #eae6e6;          /* lichte achtergrond (optioneel) */
+  color: #000;              /* tekstkleur in lijn met de border */
+  font-weight: 400;                   /* net wat steviger */
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);   /* klein beetje schaduw */
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+/* Meta info */
+.recept-meta {
+  background-color: var(--primary-light);
+  color: black;
+  padding: 12px 16px;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.5rem;
+  row-gap: 0rem;
+  align-items: center;
+  font-size: 0.95rem;
+}
+.recept-meta strong { 
+  font-weight: 600;
+  color: black;
+}
+.recept-meta i { margin-right: 0.2rem; }
+.recept-meta .meta-waarde {  margin-right: -0.3rem; }      /* optionele kleine ruimte na de ':' */
+
+
+/* Detail cards */
+.recept-body {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+}
+.recept-body .ingredienten-card {
+  flex: 0 0 30%;
+  max-width: 30%;
+}
+.recept-body .bereiding-card {
+  flex: 0 0 70%;
+  max-width: 70%;
+}
+
+/* titel van velden vetgedrukt */
+form p > label {
+  font-weight: 600;  /* of 'bold' */
+  display: block;    /* label boven veld */
+  margin-bottom: 0.3rem;
+}
+
+/* Alle standaard invoervelden iets dikker, zachter en met subtiele schaduw */
+input.form-control,
+select.form-select,
+textarea.form-control {
+  border-width: 2px;
+  border-color: #c7c7c7;       /* zachte grijstint, niet te hard */
+  border-radius: 0.5rem;       /* iets ronder */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* subtiele diepte */
+  transition: all 0.2s ease-in-out;
+}
+
+/* Bij focus: gebruik je primaire kleur, iets duidelijkere schaduw */
+input.form-control:focus,
+select.form-select:focus,
+textarea.form-control:focus {
+  border-color: var(--primary, #007bff);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+
+/* Cards */
+.recept-card {
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.recept-card .card-header {
+  font-weight: 600;
+  background-color: #f8f9fa;
+}
+
+.ingredienten-lijst {
+  padding-left: 18px; /* ruimte links */
+  margin: 0;
+}
+
+.ingredienten-lijst li {
+  margin-bottom: 4px;
+  list-style-type: disc; /* standaard bolletje */
+  font-size: 1.0rem;
+  font-weight: 400;
+}
+
+.table thead.custom-blue th{
+  background-color: #007bff !important; /* helder blauw */
+  color: white;              /* witte tekst voor contrast */
+}
+
+
+/* Recept lijst */
+
+.recept-lijst .list-group-item {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+.recept-lijst .list-group-item:hover { transform: translateY(-2px); }
+.recept-link {
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+}
+.recept-link:hover { color: var(--primary); }
+
+.recept-lijst .thumb {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.form-check-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.5rem;
+  background-color: var(--light);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.form-check-label {
+  cursor: pointer;
+}
+
+.btn-outline-light {
+  transition: all 0.2s ease;
+}
+
+.btn-outline-light:hover {
+  color: var(--danger);
+  background-color: var(--light);
+}
+
+

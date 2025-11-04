@@ -1,0 +1,32 @@
+/* ============================
+   Responsive layout
+   ============================ */
+
+/* Kleine schermen ≤768px */
+@media (max-width: 768px) {
+  .layout-wrapper {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .left-col,
+  .right-col {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .right-col {
+    min-height: auto;
+    padding: 1rem;
+    background-color: #d0ecd7;
+  }
+
+  .detail-cards {
+    flex-direction: column;
+  }
+  .detail-cards .ingredienten-card,
+  .detail-cards .bereiding-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}

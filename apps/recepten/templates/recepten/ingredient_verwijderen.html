@@ -1,10 +1,47 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- ingredient_verwijderen.html -->
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Verwijder geselecteerde ingredienten</button>
-</form>
+<div class="container mt-4">
+  <div class="card shadow-sm border-danger">
+    <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        Ingrediënten verwijderen
+      </h5>
+       <a href="{% url 'recepten:ingredient-lijst' %}" class="btn btn-outline-light btn-sm">
+             <i class="bi bi-arrow-left"></i> Terug
+       </a>
+    </div>
+
+    <div class="card-body">
+      <p class="mb-3">
+        Selecteer de ingrediënten die je wilt verwijderen.  
+        <strong>Let op:</strong> deze actie kan niet ongedaan worden gemaakt.
+      </p>
+
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          {{ form.ingredienten.errors }}
+          <div class="form-check-container">
+            {% for checkbox in form.ingredienten %}
+              <div class="form-check mb-2">
+                {{ checkbox.tag }}
+                <label class="form-check-label">{{ checkbox.choice_label }}</label>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash"></i> Verwijder geselecteerde ingrediënten
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
+

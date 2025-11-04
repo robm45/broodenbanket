@@ -1,0 +1,183 @@
+/* ============================
+   PDF-specifieke stylesheet
+   ============================ */
+
+body.pdf-versie {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 10pt;
+  margin: 20px;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* ----------------------------
+   Titelkaart
+----------------------------- */
+body.pdf-versie .titel-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+body.pdf-versie .titel-card .card-header {
+  font-size: 14pt;
+  font-weight: bold;
+  background: #17a2b8;
+  color: white;
+  padding: 8px;
+  border-radius: 6px 6px 0 0;
+}
+
+/* ----------------------------
+   Meta-informatie
+----------------------------- */
+body.pdf-versie .recept-meta {
+  background: #e3f2fd;
+  border: 1px solid #90caf9;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 9pt;
+}
+
+body.pdf-versie .recept-meta strong {
+  margin-right: 4px;
+}
+
+/* ----------------------------
+   Foto
+----------------------------- */
+body.pdf-versie .foto {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+body.pdf-versie .foto img {
+  max-height: 150px;
+  border-radius: 6px;
+  width: auto;
+  max-width: 100%;
+  display: inline-block;
+}
+
+/* ----------------------------
+   Recept Body Layout
+----------------------------- */
+body.pdf-versie .recept-body {
+  margin-top: 20px;
+}
+
+/* De rij die de twee kolommen bevat */
+body.pdf-versie .recept-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 6px; /* <-- let op: geen spatie tussen 20 en px */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ----------------------------
+   Kaarten
+----------------------------- */
+body.pdf-versie .recept-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 0.7rem;
+  box-sizing: border-box;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Breedteverdeling 30% / 70% */
+body.pdf-versie .ingredienten-card {
+  flex: 0 0 30%;
+}
+
+body.pdf-versie .bereiding-card {
+  flex: 0 0 70%;
+}
+
+/* Header binnen kaarten */
+body.pdf-versie .card-header {
+  font-weight: bold;
+  background: #17a2b8;
+  color: white;
+  padding: 4px 6px;
+  border-radius: 6px 6px 0 0;
+  margin: -8px -8px 8px -8px;
+  font-size: 10pt;
+  text-align: center;
+}
+
+/* Body van kaarten */
+body.pdf-versie .card-body {
+  padding: 8px 10px;
+  flex: 1;
+}
+
+body.pdf-versie .card-body ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+/* Ingrediëntenlijst */
+body.pdf-versie .ingredienten-lijst {
+  padding-left: 18px;
+  margin: 0;
+}
+
+body.pdf-versie .ingredienten-lijst li {
+  margin-bottom: 4px;
+  list-style-type: disc;
+  font-size: 0.7rem;
+}
+
+/* ----------------------------
+   Paragraafstijl
+----------------------------- */
+body.pdf-versie p {
+  margin: 0 0 4px 0;
+}
+
+/* ----------------------------
+   Responsief gedrag (optioneel)
+----------------------------- */
+@media (max-width: 600px) {
+  body.pdf-versie .recept-row {
+    flex-direction: column;
+  }
+
+  body.pdf-versie .ingredienten-card,
+  body.pdf-versie .bereiding-card {
+    flex: 1 1 100%;
+  }
+}
+
+/* Meta-info blok */
+body.pdf-versie .recept-meta {
+  background: #e3f2fd;
+  border: 1px solid #90caf9;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;       /* verticale en horizontale ruimte */
+  font-size: 9pt;
+  align-items: center;
+}
+
+/* Losse items in meta-info */
+body.pdf-versie .meta-item {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+

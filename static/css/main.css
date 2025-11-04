@@ -1,0 +1,7 @@
+/* main.css */
+@import url("base.css"); 
+@import url("dropdown.css");
+@import url("pdf.css");
+@import url("recept.css");
+@import url("welkom.css"); 
+@import url("responsive.css");

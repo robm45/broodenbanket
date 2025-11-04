@@ -14,7 +14,8 @@
     <form method="post" enctype="multipart/form-data" class="container my-4">
       {% csrf_token %}
 
-      <div class="mb-4">
+      <div class="mb-4 recept-form" enctype="multipart/form-data">
+        {% csrf_token %}
         {{ form.as_p }}
       </div>
 

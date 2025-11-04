@@ -10,6 +10,9 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
+from.models import UserProfile
+from django.contrib import messages
 
 # --- Gebruikersbeheer ---
 class UserListView(LoginRequiredMixin, ListView):
@@ -27,6 +30,18 @@ class UserUpdateView(UpdateView):
     form_class = CustomUserUpdateForm
     template_name = "users/user_form_update.html"
     success_url = reverse_lazy("users:user-list")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        # 🔒 Belangrijk: als je iemand anders bewerkt, niet inloggen als die persoon
+        if self.request.user.pk != self.object.pk:
+            # Forceer dat de sessie ingelogd blijft als de oorspronkelijke gebruiker
+            # (Django doet dit soms automatisch verkeerd bij User.save())
+            self.request.user.refresh_from_db()
+
+        return response
+
 
 
 class UserDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
@@ -70,3 +85,21 @@ class CustomPasswordChangeDoneView(auth_views.PasswordChangeDoneView):
 def logout_view(request):
     logout(request)
     return redirect('welkom')
+
+@login_required
+def preferences(request):
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    if request.method == "POST":
+        wants_mail = "receive_monthly_mail" in request.POST
+        profile.receive_monthly_mail = "receive_monthly_mail" in request.POST
+        profile.save()
+
+        if wants_mail:
+            messages.success(request, "Je bent ingeschreven voor maandelijks receptenrapport.")
+        else:
+
+            messages.info(request, "Je bent uitgeschreven voor maandelijks receptenrapport.")
+        return redirect("welkom")
+
+    return render(request, "users/preferences.html", {"profile": profile})
+
