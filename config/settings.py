@@ -27,8 +27,8 @@ if os.environ.get('MOD_WSGI') != 'true':
 #---------------------
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
  
-#DEBUG = os.getenv('DEBUG', 'FALSE') == 'True'
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'FALSE') == 'True'
+#DEBUG = True
 DJANGO_ENV = os.getenv('DJANGO_ENV','dev')
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 LOGGING_MODULE = os.getenv('LOGGING_MODULE', 'config.logging_dev')
