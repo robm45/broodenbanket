@@ -38,7 +38,7 @@ LOGGING = {
 
     "root": {
         "handlers": ["file", "mail_debug_file"],
-        "level": "INFO",
+        "level": "WARNING",
     },
 
     "loggers": {

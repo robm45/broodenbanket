@@ -87,6 +87,8 @@
             <li class="dropdown-header">Groepen</li>
             <li><a class="dropdown-item" href="{% url 'users:group-list' %}">Groepenlijst</a></li>
             <li><a class="dropdown-item" href="{% url 'users:group-add' %}">Nieuwe groep</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'analytics:analytics-dashboard' %}">Analytics dashboard</a></li>
           </ul>
         </li>
         {% endif %}

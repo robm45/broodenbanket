@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Analytics Dashboard</h1>
+
+<p><strong>Totaal aantal bezoeken:</strong> {{ total_visits }}</p>
+
+<h2>Meest bezochte recepten</h2>
+
+{% if top_recepten %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Recept</th>
+            <th>Aantal bezoeken</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in top_recepten %}
+        <tr>
+            <td>{{ item.recept.naam }}</td>
+            <td>{{ item.count }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Geen recepten gevonden.</p>
+{% endif %}
+{% endblock %}
+

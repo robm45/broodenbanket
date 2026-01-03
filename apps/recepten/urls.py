@@ -17,5 +17,6 @@ urlpatterns = [
         path('ingredientverwijderen/', views.ingredient_verwijderen, name='ingredient-verwijderen'),
         path('recept/<int:pk>/export_pdf', views.export_recept_pdf, name='recept-export-pdf'),
         path('<str:categorie>/',ReceptCategorieListView.as_view(), name='recept-categorie-lijst'),
+        path('recept/<int:pk>/',ReceptDetailView.as_view(), name='recept-detail'),
 ]
 
