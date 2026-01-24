@@ -60,10 +60,42 @@ class Recept(models.Model):
         ordering = ["naam"]
  
 class ReceptIngredient(models.Model):
+
+
+    EENHEID_CHOICES = [
+        ("", "-"),
+        ("gr", "gram"),
+        ("kg", "kilogram"),
+        ("ml", "milliliter"),
+        ("l", "liter"),
+        ("el", "eetlepel"),
+        ("tl", "theelepel"),
+        ("st", "stuk"),
+        ("bosje", "bosje"),
+        ("blik", "blik"),
+        ("potje", "potje"),
+        ("pak", "pak"),
+        ("pond", "pond"),
+    ]
+
+    @property
+    def display_hoeveelheid(self):
+        if self.hoeveelheid == 0:
+            return ''
+
+        if self.eenheid == '-':
+            return str(self.hoeveelheid)
+
+        return f"{self.hoeveelheid} {self.eenheid}"
+
+
     recept = models.ForeignKey(Recept, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    hoeveelheid = models.CharField(max_length=50, help_text="Bijv. '500g', '1 tl'")
+    eenheid = models.CharField(max_length=5, choices=EENHEID_CHOICES, blank=True)
+    hoeveelheid = models.PositiveIntegerField(null=True, blank=True, default=0)
  
     def __str__(self):
-        return f"{self.hoeveelheid} {self.ingredient.naam} voor {self.recept.naam}"
+        if self.eenheid:
+           return f"{self.hoeveelheid} {self.get_eenheid_display()} {self.ingredient_naam} ({self.recept.naam})"
+        return f"{self.hoeveelheid} {self.eenheid} {self.ingredient.naam} voor {self.recept.naam}"
  

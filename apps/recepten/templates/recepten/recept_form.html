@@ -32,7 +32,8 @@
             <thead class="table-light">
               <tr>
                 <th style="width:40%">Ingrediënt</th>
-                <th style="width:40%">Hoeveelheid</th>
+                <th style="width:20%">Hoeveelheid</th>
+                <th style="width:20%">Eenheid</th>
                 <th style="width:20%">Actie</th>
               </tr>
             </thead>
@@ -53,6 +54,13 @@
                 <td>
                   {% render_field form.hoeveelheid class="form-control" %}
                   {% for error in form.hoeveelheid.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                  {% endfor %}
+                </td>
+
+                <td>
+                  {% render_field form.eenheid class="form-control" %}
+                  {% for error in form.eenheid.errors %}
                     <div class="invalid-feedback d-block">{{ error }}</div>
                   {% endfor %}
                 </td>

@@ -39,7 +39,7 @@ class ReceptIngredientForm(forms.ModelForm):
 
     class Meta:
         model = ReceptIngredient
-        fields = ['ingredient','hoeveelheid','nieuw_ingredient']
+        fields = ['ingredient','hoeveelheid','eenheid', 'nieuw_ingredient']
 
 class VerwijderIngredientForm(forms.Form):
     ingredienten=forms.ModelMultipleChoiceField(
@@ -52,12 +52,13 @@ class VerwijderIngredientForm(forms.Form):
 IngredientFormSet = inlineformset_factory(
     Recept,
     ReceptIngredient,
-    fields=['ingredient', 'hoeveelheid'],
+    fields=['ingredient', 'hoeveelheid', 'eenheid'],
     extra=1,  # standaard 3 lege velden
     can_delete=True,
     widgets={
         'naam': forms.TextInput(attrs={'class': 'form-control'}),
         'hoeveelheid': forms.TextInput(attrs={'class': 'form-control'}),
+        'eenheid': forms.TextInput(attrs={'class': 'form-control'}),
     }
 )
 
