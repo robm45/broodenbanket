@@ -30,7 +30,7 @@
 .card-small {
   width: 170px;
   margin: 10px;
- 
+} 
 
 .square-thumb {
   width: 150px;
@@ -38,5 +38,14 @@
   object-fit: cover;
   display: block;
   margin: auto;
+  border-radius: 8px;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.square-thumb:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
 }
 

@@ -46,7 +46,11 @@
           <div class="card-body">
             <ul class="card-body">
               {% for ri in recept.receptingredient_set.all %}
-                <li>{{ ri.hoeveelheid }} {{ ri.ingredient.naam }}</li>
+                <li>{% if ri.display_hoeveelheid %}
+                            {{ ri.display_hoeveelheid }}
+                    {% endif %}
+                    {{ ri.ingredient.naam }}
+                </li>
               {% empty %}
                 <li><em>Geen ingrediënten toegevoegd.</em></li>
               {% endfor %}
