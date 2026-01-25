@@ -22,7 +22,8 @@
             {% endfor %}
             <div class="d-flex justify-content-between">
               <a href="{% url 'recepten:ingredient-lijst' %}" class="btn btn-outline-secondary">Annuleren</a>
-              <button class="btn btn-success" type="submit">Opslaan</button>
+              <button class="btn btn-success" type="submit" name="save">Opslaan</button>
+              <button class="btn btn-primary" type="submit" name="save_and_add">Opslaan en nieuw ingredient</button>
             </div>
           </form>
         </div>

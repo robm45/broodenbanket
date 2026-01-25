@@ -24,6 +24,11 @@ class IngredientForm(forms.ModelForm):
             'naam': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        first_field = next(iter(self.fields.values()))
+        first_field.widget.attrs["autofocus"] = True
+
 class ReceptIngredientForm(forms.ModelForm):
     ingredient = forms.ModelChoiceField(
             queryset=Ingredient.objects.all(),

@@ -15,11 +15,11 @@ class IngredientListView(ListView):
     template_name = 'recepten/ingredient_lijst.html'
     context_object_name = 'ingredienten'
     
-class IngredientCreateView(CreateView):                                                                                                                                             
-    model = Ingredient
-    form_class = IngredientForm
-    template_name = 'recepten/ingredient_toevoegen.html'
-    success_url = reverse_lazy('recepten:ingredient-lijst')
+#class IngredientCreateView(CreateView):
+#    model = Ingredient
+#    form_class = IngredientForm
+#    template_name = 'recepten/ingredient_toevoegen.html'
+#   success_url = reverse_lazy('recepten:ingredient-lijst')
     
     
 # formset voor de gecombineerde invoer van recept inclusief de ingredienten
@@ -50,4 +50,19 @@ def ingredient_verwijderen(request):
     else:
         form = VerwijderIngredientForm()
     return render(request, 'recepten/ingredient_verwijderen.html', {'form': form})
+
+def IngredientCreateView(request):
+    if request.method == "POST":
+        form = IngredientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # check welke knop werd ingedrukt
+            if "save_and_add" in request.POST:
+                return redirect("recepten:ingredient-toevoegen")  # dezelfde pagina opnieuw
+            else:
+                return redirect("recepten:ingredient-lijst")  # terug naar lijst
+    else:
+        form = IngredientForm()
+
+    return render(request, "recepten/ingredient_toevoegen.html", {"form": form})
 

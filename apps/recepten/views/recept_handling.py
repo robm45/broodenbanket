@@ -34,9 +34,9 @@ class BaseReceptMixin:
         self.object = form.save(commit=False)  # recept opslaan
         self.object.save()      
                                 
-        print(self.request.FILES)
+        #print(self.request.FILES)
         foto = form.cleaned_data.get('foto')
-        print("Foto in cleaned_data:", foto )
+       # print("Foto in cleaned_data:", foto )
         if foto:                
             # sla het orginele pad op
             orig_path = None    

@@ -85,6 +85,7 @@
             {% for hidden in ingredienten_formset.empty_form.hidden_fields %}{{ hidden }}{% endfor %}
             <td>{% render_field ingredienten_formset.empty_form.ingredient class="form-control" %}</td>
             <td>{% render_field ingredienten_formset.empty_form.hoeveelheid class="form-control" %}</td>
+            <td>{% render_field ingredienten_formset.empty_form.eenheid class="form-control" %}</td>
             <td class="text-center">
               {{ ingredienten_formset.empty_form.DELETE }}
               <button type="button" class="btn btn-sm btn-danger remove-row">
@@ -111,36 +112,62 @@ document.addEventListener("DOMContentLoaded", function() {
   const emptyRow = document.getElementById("empty-form-row");
   const totalForms = document.querySelector("[name$='-TOTAL_FORMS']");
 
-  // Nieuwe rij
-  addButton.addEventListener("click", function() {
+  function addNewRow() {
     const idx = parseInt(totalForms.value, 10);
     const newRow = emptyRow.cloneNode(true);
     newRow.style.display = "";
     newRow.removeAttribute("id");
 
-    // vervang __prefix__ overal (ook in hidden input names/ids!)
     newRow.innerHTML = newRow.innerHTML.replace(/__prefix__/g, idx);
     totalForms.value = idx + 1;
 
     tableBody.appendChild(newRow);
+    return newRow;
+  }
+
+  // Handmatig toevoegen via knop
+  addButton.addEventListener("click", function() {
+    addNewRow();
   });
 
-  // Verwijderen (DELETE aanvinken + verbergen)
+  // Automatisch nieuwe rij bij invullen laatste rij
+  tableBody.addEventListener("input", function(e) {
+    const row = e.target.closest("tr");
+    if (!row) return;
+
+    // alleen zichtbare rijen
+    const rows = Array.from(tableBody.querySelectorAll("tr"))
+      .filter(r => r.style.display !== "none");
+
+    const lastRow = rows[rows.length - 1];
+    if (row !== lastRow) return;
+
+    // check of er iets ingevuld is (bv ingredient naam)
+    const inputs = row.querySelectorAll("input[type='text'], input[type='number'], textarea");
+    const hasValue = Array.from(inputs).some(input => input.value.trim() !== "");
+
+    if (hasValue) {
+      addNewRow();
+    }
+  });
+
+  // Verwijderen
   tableBody.addEventListener("click", function(e) {
     const btn = e.target.closest(".remove-row");
     if (!btn) return;
+
     const row = btn.closest("tr");
     const deleteInput = row.querySelector("input[type=checkbox][name$='-DELETE']");
     if (deleteInput) {
-      deleteInput.checked = true;          // markeer voor delete
-      row.style.display = "none";          // visueel verbergen
+      deleteInput.checked = true;
+      row.style.display = "none";
     } else {
-      // fallback voor rijen die niet correct gevuld zijn
       row.remove();
     }
   });
 });
 </script>
+
 
 {% endblock %}
 
