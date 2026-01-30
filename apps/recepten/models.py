@@ -94,6 +94,11 @@ class ReceptIngredient(models.Model):
     eenheid = models.CharField(max_length=5, choices=EENHEID_CHOICES, blank=True)
     hoeveelheid = models.PositiveIntegerField(null=True, blank=True, default=0)
  
+    volgorde = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = [ 'id' ]
+
     def __str__(self):
         if self.eenheid:
            return f"{self.hoeveelheid} {self.get_eenheid_display()} {self.ingredient_naam} ({self.recept.naam})"
