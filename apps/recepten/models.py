@@ -97,10 +97,10 @@ class ReceptIngredient(models.Model):
     volgorde = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = [ 'id' ]
+        ordering = [ 'volgorde' ]
 
     def __str__(self):
         if self.eenheid:
-           return f"{self.hoeveelheid} {self.get_eenheid_display()} {self.ingredient_naam} ({self.recept.naam})"
-        return f"{self.hoeveelheid} {self.eenheid} {self.ingredient.naam} voor {self.recept.naam}"
+           return f"{self.hoeveelheid} {self.get_eenheid_display()} {self.ingredient} ({self.recept.naam})"
+        return f"{self.hoeveelheid} {self.eenheid} {self.ingredient} voor {self.recept.naam}"
  

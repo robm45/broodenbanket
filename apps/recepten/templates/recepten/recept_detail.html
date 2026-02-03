@@ -42,10 +42,12 @@
       <div class="card-body">
         <ul class="list-group list-group-flush">
           {% for ri in recept.receptingredient_set.all %}
-          <li class="list-group-item">{% if ri.display_hoeveelheid %} 
-                                           {{ ri.display_hoeveelheid }} 
-                                      {% endif %} 
-                                      {{ ri.ingredient.naam }}</li>
+          <li class="list-group-item">
+                  {% if ri.display_hoeveelheid %} 
+                       {{ ri.display_hoeveelheid }} 
+                  {% endif %} 
+                  {{ ri.ingredient.naam }}
+          </li>
           {% empty %}
             <li class="list-group-item text-muted">Geen ingrediënten toegevoegd.</li>
           {% endfor %}

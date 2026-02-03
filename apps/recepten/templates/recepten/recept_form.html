@@ -33,8 +33,9 @@
               <tr>
                 <th style="width:40%">Ingrediënt</th>
                 <th style="width:20%">Hoeveelheid</th>
-                <th style="width:20%">Eenheid</th>
-                <th style="width:20%">Actie</th>
+                <th style="width:15%">Eenheid</th>
+                <th style="width:10%">Volgorde</th>
+                <th style="width:15%">Actie</th>
               </tr>
             </thead>
             <tbody>
@@ -66,6 +67,32 @@
                 </td>
 
                 <td class="text-center">
+                  {% if form.instance.pk %}
+                    <div class="btn-group btn-group-sm mb-1" role="group">
+                      {% if not forloop.first %}
+                        <a
+                          href="{% url 'recepten:ingredient_omhoog' form.instance.pk %}"
+                          class="order-btn up"
+                          title="Omhoog"
+                        >
+                        <i class="bi bi-arrow-up"></i>
+                        </a>
+                      {% endif %}
+
+                      {% if not forloop.last %}
+                        <a
+                          href="{% url 'recepten:ingredient_omlaag' form.instance.pk %}"
+                          class="order-btn down"
+                          title="Omlaag"
+                        >
+                        <i class="bi bi-arrow-down"></i>
+                        </a>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </td>
+
+                <td class="text-center">
                   {{ form.DELETE }}
                   <button type="button" class="btn btn-sm btn-danger remove-row">
                     <i class="bi bi-trash"></i> Verwijder
@@ -86,6 +113,7 @@
             <td>{% render_field ingredienten_formset.empty_form.ingredient class="form-control" %}</td>
             <td>{% render_field ingredienten_formset.empty_form.hoeveelheid class="form-control" %}</td>
             <td>{% render_field ingredienten_formset.empty_form.eenheid class="form-control" %}</td>
+            <td class= "text-center"></td>
             <td class="text-center">
               {{ ingredienten_formset.empty_form.DELETE }}
               <button type="button" class="btn btn-sm btn-danger remove-row">

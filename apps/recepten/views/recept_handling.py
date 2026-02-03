@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
+from django.db import transaction
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
-from ..models import Recept, ReceptIngredient, Ingredient
-from ..forms import ReceptForm, IngredientForm, ReceptIngredientForm, ReceptIngredientFormSet
+from apps.recepten.models import Recept, ReceptIngredient, Ingredient
+from apps.recepten.forms import ReceptForm, IngredientForm, ReceptIngredientForm, ReceptIngredientFormSet, MinutenDurationField
 from PIL import Image
 from django.core.files.base import ContentFile
 import os, io
@@ -62,16 +64,39 @@ class BaseReceptMixin:
                                 
                                 
         # Formset verwerken     
-        ingredienten_formset = ReceptIngredientFormSet(self.request.POST, instance=self.object)
+        ingredienten_formset = ReceptIngredientFormSet(
+                self.request.POST, 
+                instance=self.object
+        )
         if ingredienten_formset.is_valid():
-            for ingr_form in ingredienten_formset:
-                if ingr_form.cleaned_data and not ingr_form.cleaned_data.get('DELETE', False):
-                    nieuw_naam = ingr_form.cleaned_data.get("nieuw_ingredient")
-                    if nieuw_naam:
+            instances = ingredienten_formset.save(commit=False)
+
+            volgorde=0
+            for ingr_form, instance in zip(ingredienten_formset.forms, instances):
+                if ingr_form.cleaned_data.get('DELETE', False):
+                    continue
+
+                nieuw_naam = ingr_form.cleaned_data.get("nieuw_ingredient")
+                if nieuw_naam:
                         ingredient, _ = Ingredient.objects.get_or_create(naam=nieuw_naam)
                         ingr_form.instance.ingredient = ingredient
-        ingredienten_formset.save()
-                                
+                
+                instance.rcept = self.object
+                instance.save()
+
+            for obj in ingredienten_formset.deleted_objects:
+                obj.delete()
+
+            qs = ReceptIngredient.objects.filter(
+                    recept=self.object
+            ).order_by("volgorde","id")
+
+            for index, ri in enumerate(qs):
+                if ri.volgorde != index:
+                    ri.volgorde = index
+                    ri.save(update_fields=["volgorde"])
+
+
         return redirect("recepten:recept-detail", pk=self.object.pk)
                                 
                                 
@@ -87,8 +112,10 @@ class BaseReceptMixin:
                 print("Storage heeft geen lokaal pad (bv. cloud storage).")
                                 
         return redirect("recepten:recept-detail", pk=self.object.pk)
-                                
-                                
+
+    # views.py
+
+    
 class ReceptCreateView(BaseReceptMixin, CreateView):
     """Nieuw recept maken"""    
     model=Recept                
@@ -108,3 +135,59 @@ class ReceptDetailView(DetailView):
     template_name = 'recepten/recept_detail.html'
     context_object_name = 'recept'
 
+# Volgorde wijziging
+
+def ingredient_omhoog(request, ri_id):
+    with transaction.atomic():
+        ri = (
+            ReceptIngredient.objects
+            .select_for_update()
+            .get(pk=ri_id)
+        )
+
+        boven = (
+            ReceptIngredient.objects
+            .select_for_update()
+            .filter(
+                recept=ri.recept,
+                volgorde__lt=ri.volgorde
+            )
+            .order_by("-volgorde")
+            .first()
+        )
+
+        if boven:
+            ri.volgorde, boven.volgorde = boven.volgorde, ri.volgorde
+            ri.save(update_fields=["volgorde"])
+            boven.save(update_fields=["volgorde"])
+
+    return redirect("recepten:recept-update", pk=ri.recept.pk)
+
+                            
+def ingredient_omlaag(request, ri_id):
+    with transaction.atomic():
+        ri = (
+            ReceptIngredient.objects
+            .select_for_update()
+            .get(pk=ri_id)
+        )
+
+        onder = (
+            ReceptIngredient.objects
+            .select_for_update()
+            .filter(
+                recept=ri.recept,
+                volgorde__gt=ri.volgorde
+            )
+            .order_by("volgorde")
+            .first()
+        )
+
+        if onder:
+            ri.volgorde, onder.volgorde = onder.volgorde, ri.volgorde
+            ri.save(update_fields=["volgorde"])
+            onder.save(update_fields=["volgorde"])
+
+    return redirect("recepten:recept-update", pk=ri.recept.pk)
+
+                                

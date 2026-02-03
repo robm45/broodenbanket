@@ -194,8 +194,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-print("BASE_DIR =", BASE_DIR)
-print("Templates dir =", BASE_DIR / "templates")
+#print("BASE_DIR =", BASE_DIR)
+#print("Templates dir =", BASE_DIR / "templates")
 
 # -------------------
 # Logging inlezen
