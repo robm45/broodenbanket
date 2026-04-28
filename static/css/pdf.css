@@ -1,183 +1,165 @@
 /* ============================
-   PDF-specifieke stylesheet
+   PDF RECIPE LAYOUT (CLEAN)
    ============================ */
 
 body.pdf-versie {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 10pt;
-  margin: 20px;
+  line-height: 1.5;
   color: #333;
-  line-height: 1.4;
+  margin: 20px;
 }
 
-/* ----------------------------
-   Titelkaart
------------------------------ */
+/* ============================
+   GLOBAL BOX MODEL FIX
+============================ */
+body.pdf-versie *,
+body.pdf-versie *::before,
+body.pdf-versie *::after {
+  box-sizing: border-box;
+}
+
+/* ============================
+   TITEL
+============================ */
 body.pdf-versie .titel-card {
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 15px;
   text-align: center;
+  margin-bottom: 12px;
 }
 
 body.pdf-versie .titel-card .card-header {
-  font-size: 14pt;
+  font-size: 18pt;
   font-weight: bold;
-  background: #17a2b8;
-  color: white;
-  padding: 8px;
-  border-radius: 6px 6px 0 0;
+  letter-spacing: 0.5px;
+  padding: 6px 0;
+  border-bottom: 1px solid #ccc;
 }
 
-/* ----------------------------
-   Meta-informatie
------------------------------ */
-body.pdf-versie .recept-meta {
-  background: #e3f2fd;
-  border: 1px solid #90caf9;
-  border-radius: 8px;
-  padding: 8px;
-  margin-bottom: 15px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-size: 9pt;
-}
-
-body.pdf-versie .recept-meta strong {
-  margin-right: 4px;
-}
-
-/* ----------------------------
-   Foto
------------------------------ */
+/* ============================
+   FOTO
+============================ */
 body.pdf-versie .foto {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 body.pdf-versie .foto img {
-  max-height: 150px;
-  border-radius: 6px;
-  width: auto;
   max-width: 100%;
-  display: inline-block;
-}
-
-/* ----------------------------
-   Recept Body Layout
------------------------------ */
-body.pdf-versie .recept-body {
-  margin-top: 20px;
-}
-
-/* De rij die de twee kolommen bevat */
-body.pdf-versie .recept-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  gap: 6px; /* <-- let op: geen spatie tussen 20 en px */
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* ----------------------------
-   Kaarten
------------------------------ */
-body.pdf-versie .recept-card {
-  border: 1px solid #ddd;
+  max-height: 220px;
+  object-fit: cover;
   border-radius: 6px;
-  padding: 8px;
-  font-size: 0.7rem;
-  box-sizing: border-box;
-  background: #fafafa;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Breedteverdeling 30% / 70% */
+/* ============================
+   META INFO
+============================ */
+body.pdf-versie .recept-meta {
+  font-size: 9pt;
+  color: #666;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #ddd;
+}
+
+body.pdf-versie .meta-item {
+  display: inline-block;
+  margin-right: 12px;
+}
+
+/* ============================
+   LAYOUT (2 KOLOMMEN)
+============================ */
+body.pdf-versie .recept-row {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+/* ============================
+   KOLOMMEN
+============================ */
+body.pdf-versie .recept-card {
+  display: table-cell;
+  vertical-align: top;
+  border: 1px solid #ddd;
+  background: #fafafa;
+}
+
+/* vaste verdeling */
 body.pdf-versie .ingredienten-card {
-  flex: 0 0 30%;
+  width: 30%;
 }
 
 body.pdf-versie .bereiding-card {
-  flex: 0 0 70%;
+  width: 70%;
 }
 
-/* Header binnen kaarten */
+/* ============================
+   CARD HEADER
+============================ */
 body.pdf-versie .card-header {
   font-weight: bold;
-  background: #17a2b8;
-  color: white;
-  padding: 4px 6px;
-  border-radius: 6px 6px 0 0;
-  margin: -8px -8px 8px -8px;
   font-size: 10pt;
   text-align: center;
+  padding: 6px;
+  border-bottom: 1px solid #ddd;
 }
 
-/* Body van kaarten */
+/* ============================
+   CARD BODY (ENIGE PADDING BRON)
+============================ */
 body.pdf-versie .card-body {
   padding: 8px 10px;
-  flex: 1;
 }
 
-body.pdf-versie .card-body ul {
-  margin: 0;
-  padding-left: 18px;
-}
-
-/* Ingrediëntenlijst */
+/* ============================
+   INGREDIËNTEN
+============================ */
 body.pdf-versie .ingredienten-lijst {
-  padding-left: 18px;
   margin: 0;
+  padding-left: 14px;
 }
 
 body.pdf-versie .ingredienten-lijst li {
-  margin-bottom: 4px;
-  list-style-type: disc;
-  font-size: 0.7rem;
+  margin-bottom: 3px;
 }
 
-/* ----------------------------
-   Paragraafstijl
------------------------------ */
+/* ============================
+   BEREIDING (CKEDITOR SAFE RESET)
+============================ */
+body.pdf-versie .bereiding-card .card-body * {
+  margin-left: 0 !important;
+  padding-left: 12px !important;
+  text-indent: 0 !important;
+}
+
+body.pdf-versie .bereiding-card ul,
+body.pdf-versie .bereiding-card ol {
+  padding-left: 14px;
+  margin-left: 0;
+}
+
+body.pdf-versie .bereiding-card .card-body {
+  line-height: 1.6;
+}
+
+/* ============================
+   PARAGRAVEN
+============================ */
 body.pdf-versie p {
-  margin: 0 0 4px 0;
+  margin: 0 0 6px 0;
 }
 
-/* ----------------------------
-   Responsief gedrag (optioneel)
------------------------------ */
-@media (max-width: 600px) {
-  body.pdf-versie .recept-row {
-    flex-direction: column;
+/* ============================
+   PRINT SETTINGS
+============================ */
+@page {
+  margin: 18mm;
+}
+
+@media print {
+  body {
+    margin: 0;
   }
-
-  body.pdf-versie .ingredienten-card,
-  body.pdf-versie .bereiding-card {
-    flex: 1 1 100%;
-  }
 }
-
-/* Meta-info blok */
-body.pdf-versie .recept-meta {
-  background: #e3f2fd;
-  border: 1px solid #90caf9;
-  border-radius: 8px;
-  padding: 8px 12px;
-  margin-bottom: 15px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 20px;       /* verticale en horizontale ruimte */
-  font-size: 9pt;
-  align-items: center;
-}
-
-/* Losse items in meta-info */
-body.pdf-versie .meta-item {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
-

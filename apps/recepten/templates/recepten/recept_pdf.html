@@ -40,39 +40,33 @@
     <!-- Body -->
     <div class="recept-body">
      <div class="recept-row">
-      <!-- Ingrediënten -->
-       <div class="recept-card ingredienten-card">
-               <div class="card-header"> Ingrediënten </div>
-          <div class="card-body">
-            <ul class="card-body">
-              {% for ri in recept.receptingredient_set.all %}
-                <li>{% if ri.display_hoeveelheid %}
-                            {{ ri.display_hoeveelheid }}
-                    {% endif %}
-                    {{ ri.ingredient.naam }}
-                </li>
-              {% empty %}
-                <li><em>Geen ingrediënten toegevoegd.</em></li>
-              {% endfor %}
-            </ul>
-          </div>
+      <div class="recept-card ingredienten-card">
+       <div class="card-header">Ingrediënten</div>
+       <div class="card-body">
+         <ul class="ingredienten-lijst">
+           {% for ri in recept.receptingredient_set.all %}
+             <li>
+              {% if ri.display_hoeveelheid %}
+                <span class="hoeveelheid">{{ ri.display_hoeveelheid }}</span>
+                 {% endif %}
+                <span class="ingredient">{{ ri.ingredient.naam }}</span>
+            </li>
+          {% empty %}
+            <li><em>Geen ingrediënten toegevoegd.</em></li>
+          {% endfor %}
+         </ul>
        </div>
-      <!-- Bereidingswijze -->
-       <div class="recept-card bereiding-card">
-          <div class="card-header">
-            Bereidingswijze
-          </div>
+     </div>
+
+     <div class="recept-card bereiding-card">
+       <div class="card-header">Bereidingswijze</div>
           <div class="card-body">
-            <p>{{ recept.bereidingswijze|linebreaks }}</p>
+            {{ recept.bereidingswijze|safe }}
           </div>
         </div>
-     </div>
+      </div>
     </div>
 
+    
 </body>
 </html>
-
-<script>
-  console.log("Foto pad:", "{{ foto_pad|escapejs }}");
-</script>
-

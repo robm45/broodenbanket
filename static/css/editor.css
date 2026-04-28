@@ -1,0 +1,8 @@
+.ck-content p {
+    margin-bottom: 0.4rem;
+}
+
+.ck-content ol li p,
+.ck-content ul li p {
+    margin: 0;
+}

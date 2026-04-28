@@ -192,3 +192,8 @@ textarea.form-control:focus {
   background-color: #dc3545; /* rood */
 }
 
+/* ckeditor 5 aanpassingen */
+ol li p,
+ul li p {
+ margin: 0;
+}

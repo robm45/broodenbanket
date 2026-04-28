@@ -1,4 +1,5 @@
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field
 
 # Create your models here.
 from django.core.exceptions import ValidationError
@@ -41,7 +42,7 @@ class Recept(models.Model):
  
     naam = models.CharField(max_length=100)
     categorie = models.CharField(max_length=10, choices=CATEGORIE_CHOICES)
-    bereidingswijze = models.TextField()
+    bereidingswijze = CKEditor5Field('Bereidingswijze', config_name='default')
     baktijd = models.DurationField(help_text="Bijv. 00:30:00 voor 30 minuten")
     moeilijkheidsgraad = models.PositiveSmallIntegerField(choices=MOEILIJKHEID_CHOICES, default=1)
     datum_toegevoegd = models.DateTimeField(auto_now_add=True)

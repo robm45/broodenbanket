@@ -61,7 +61,7 @@
         <h4 class="mb-0">Bereidingswijze</h4>
       </div>
       <div class="card-body">
-        <p>{{ recept.bereidingswijze|linebreaks }}</p>
+        <p>{{ recept.bereidingswijze|safe|linebreaks }}</p>
       </div>
     </div>
 

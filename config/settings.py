@@ -14,6 +14,7 @@ from pathlib import Path
 import os, json
 from importlib import import_module
 from dotenv import load_dotenv
+from config.ckeditor_config import CKEDITOR_5_CONFIGS
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -88,6 +89,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'crispy_forms',
     'widget_tweaks',
+    'django_ckeditor_5',
 ]
 
 MIDDLEWARE = [

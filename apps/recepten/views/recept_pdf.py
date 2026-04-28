@@ -13,8 +13,6 @@ def export_recept_pdf(request, pk):
        foto_pad = 'file://' + os.path.join(settings.MEDIA_ROOT, recept.foto.name)
     else:
         foto_pad = None
- 
-    print("📸 Foto pad:", foto_pad)  # <-- komt in je Django console terecht
 
     # Render naar HTML string (gebruik de pdf template)
     html_string = render_to_string(
