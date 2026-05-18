@@ -81,8 +81,10 @@ class BaseReceptMixin:
                         ingredient, _ = Ingredient.objects.get_or_create(naam=nieuw_naam)
                         ingr_form.instance.ingredient = ingredient
                 
-                instance.rcept = self.object
-                instance.save()
+                instance.recept = self.object
+                
+                if instance.ingredient:
+                    instance.save()
 
             for obj in ingredienten_formset.deleted_objects:
                 obj.delete()
@@ -97,7 +99,15 @@ class BaseReceptMixin:
                     ri.save(update_fields=["volgorde"])
 
 
-        return redirect("recepten:recept-detail", pk=self.object.pk)
+            return redirect("recepten:recept-detail", pk=self.object.pk)
+        
+        else:
+            return self.render_to_response(
+                self.get_context_data(
+                    form=form,
+                    ingredient_formset=ingredienten_formset
+                )
+            )
                                 
                                 
                                 

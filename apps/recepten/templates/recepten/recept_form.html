@@ -22,9 +22,21 @@
       <div class="card mb-4 shadow-sm">
         <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
           <h5 class="mb-0">Ingrediënten</h5>
-          <button type="button" id="add-ingredient" class="btn btn-success btn-sm">
-            <i class="bi bi-plus-lg"></i> Ingrediënt toevoegen
-          </button>
+          <div class="d-flex gap-2">
+            <button type="button" id="add-ingredient" class="btn btn-success btn-sm">
+              <i class="bi bi-plus-lg"></i> Ingrediënt toevoegen
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-warning btn-sm border"
+              data-bs-toggle="modal"
+              data-bs-target="#ingredientHelpModal"
+              title="Uitleg ingrediënten invoeren"
+            >
+              <i class="bi bi-info-circle-fill"></i>
+            </button>
+          </div>
         </div>
 
         <div class="card-body p-0">
@@ -41,6 +53,19 @@
             <tbody>
               {{ ingredienten_formset.management_form }}
               {% for form in ingredienten_formset %}
+
+              {% if form.non_field_errors %}
+              <tr>
+                <td colspan="5">
+                  {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger py-1 mb-1">
+                      {{ error }}
+                    </div>
+                  {% endfor %}
+                </td>
+              </tr>
+              {% endif %}
+
               <tr class="ingredient-row">
                 {# 🔑 VERPLICHT: render alle hidden velden zoals form.id etc. #}
                 {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
@@ -133,6 +158,114 @@
         </div>
     </form>
   </div>
+  <div
+  class="modal fade"
+  id="ingredientHelpModal"
+  tabindex="-1"
+  aria-labelledby="ingredientHelpModalLabel"
+  aria-hidden="true"
+  >
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title" id="ingredientHelpModalLabel">
+          Ingrediënten toevoegen
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Sluiten"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+
+        <h6>Ingrediënt invoeren</h6>
+
+        <p>
+          Vul per regel een ingrediënt in.
+        </p>
+
+        <ul>
+          <li>Voer eerst een hoeveelheid in</li>
+          <li>Kies daarna een eenheid</li>
+          <li>Selecteer vervolgens een ingrediënt</li>
+        </ul>
+
+        <hr>
+
+        <h6>Voorbeelden</h6>
+
+        <table class="table table-sm table-bordered">
+          <thead>
+            <tr>
+              <th>Hoeveelheid</th>
+              <th>Eenheid</th>
+              <th>Ingrediënt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>250</td>
+              <td>gr</td>
+              <td>Bloem</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>st</td>
+              <td>Eieren</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>el</td>
+              <td>Olijfolie</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h6>Nieuwe ingrediënten</h6>
+
+        <p>
+          Bestaat een ingrediënt nog niet?  
+          Gebruik dan het knop:
+        </p>
+
+        <div class="badge bg-success fs-6">
+          <strong>+Ingrediënt toevoegen</strong>
+        </div>
+
+        <hr>
+
+        <h6>Verwijderen</h6>
+
+        <p>
+          Gebruik de knop
+          <button type="button" class="btn btn-sm btn-danger" disabled>
+            <i class="bi bi-trash"></i> Verwijder
+          </button>
+          om een regel te verwijderen.
+        </p>
+
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Sluiten
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
 </div>
 
 <script>
@@ -173,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (row !== lastRow) return;
 
     // check of er iets ingevuld is (bv ingredient naam)
-    const inputs = row.querySelectorAll("input[type='text'], input[type='number'], textarea");
+    const inputs = row.querySelectorAll("input, select, textarea");
     const hasValue = Array.from(inputs).some(input => input.value.trim() !== "");
 
     if (hasValue) {

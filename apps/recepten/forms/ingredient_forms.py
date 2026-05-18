@@ -32,6 +32,22 @@ class ReceptIngredientForm(forms.ModelForm):
     class Meta:
         model = ReceptIngredient
         fields = ['ingredient','hoeveelheid','eenheid', 'nieuw_ingredient']
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        ingredient = cleaned_data.get("ingredient")
+        nieuw_ingredient = cleaned_data.get("nieuw_ingredient")
+        hoeveelheid = cleaned_data.get("hoeveelheid")
+        eenheid = cleaned_data.get("eenheid")
+
+        # Als gebruiker iets invult, moet ingredient aanwezig zijn
+        if (hoeveelheid or eenheid) and not (ingredient or nieuw_ingredient):
+            raise forms.ValidationError(
+                "Kies een ingredient of voer een nieuw ingredient in."
+            )
+
+        return cleaned_data
  
 class VerwijderIngredientForm(forms.Form):
     ingredienten=forms.ModelMultipleChoiceField(
@@ -62,4 +78,3 @@ ReceptIngredientFormSet = inlineformset_factory(
     can_delete=True
 )
  
-

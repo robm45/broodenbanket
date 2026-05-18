@@ -84,7 +84,7 @@ class ReceptIngredient(models.Model):
         if self.hoeveelheid == 0:
             return ''
 
-        if self.eenheid == '-':
+        if not self.eenheid:
             return str(self.hoeveelheid)
 
         return f"{self.hoeveelheid} {self.eenheid}"
